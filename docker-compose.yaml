@@ -1,0 +1,31 @@
+version: "3.9"
+
+volumes:
+  postgre_data:
+
+services:
+  php8-apache:
+    build: php8-apache/
+    restart: always
+    volumes:
+      - ../www:/var/www/html
+      - ./php8-apache/php.ini:/usr/local/ext/php/php.ini
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=databases
+      - DB_USER=postgres
+      - DB_PASSWORD=postgrespass
+    ports:
+      - "127.0.0.1:8080:80"
+      - "127.0.0.1:9003:9003"
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:13.5
+    restart: always
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgre_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgrespass
