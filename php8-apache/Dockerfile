@@ -3,6 +3,8 @@ FROM php:8.0-apache
 VOLUME ["$PHP_INI_DIR/php.ini", "/var/www/html/"]
 EXPOSE 9003 80
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 # Installing community tool to easiest installation php extensions
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions
@@ -19,7 +21,6 @@ RUN chmod a+x /usr/local/bin/composer
 
 # Enable apache rewrite module
 RUN set -ex && a2enmod rewrite
-RUN set -ex && service apache2 restart
 
 RUN set -ex && apt update && apt install mc -y
 
