@@ -8,7 +8,7 @@
 # По умолчанию USER_ID равен 1000
 USER_ID=${DOCKER_HOST_USER_ID:-1000}
 echo "Starting with UID : $USER_ID"
-usermod -u 1000 www-data
+usermod -u "$USER_ID" www-data
 chown -R www-data:www-data /var/www/html/
 
 exec "$@"
