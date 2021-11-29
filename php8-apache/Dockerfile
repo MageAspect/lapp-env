@@ -12,8 +12,9 @@ RUN chmod +x /usr/local/bin/install-php-extensions
 # Installing php extentions
 RUN install-php-extensions pgsql pdo_pgsql zip xdebug
 
-RUN echo "xdebug.mode=debug" >> "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini"
-RUN echo "xdebug.start_with_request=no" >> "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini"
+RUN echo "xdebug.mode=develop,debug" >> "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini"
+RUN echo "xdebug.start_with_request=yes" >> "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini"
+RUN echo "xdebug.client_host=host.docker.internal" >> "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini"
 
 # Installing composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
