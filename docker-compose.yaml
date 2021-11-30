@@ -11,20 +11,27 @@ services:
       - ../www:/var/www/html
       - ./php8-apache/php.ini:/usr/local/ext/php/php.ini
     environment:
-      - DB_HOST=postgres
+      - DB_HOST=127.0.0.1
       - DB_NAME=databases
       - DB_USER=postgres
       - DB_PASSWORD=postgrespass
       - DOCKER_HOST_USER_ID=1000
-    ports:
-      - "127.0.0.1:8080:80"
+
+    # Docker-host и container начинают работать без сетевой изоляции (работают в localhost-е Docker-host-а),
+    # поэтому проброс портов не нужен.
+    # Использование network_mode: "host" оправдано только в режиме разработки в формате Docker-host на VPS <-> рабочий компьютер,
+    # для простой настройки работы xdebug.
+    # Без network_mode: "host" xdebug не будет работать через ssh-туннель между Docker-host-ом на VPS и рабочим компьютером,
+    # т.к. ssh-туннелирование работает только для портов на localhost-е,
+    # а сам контейнер php8-apache будет иметь свой ip-адрес != localhost, что нам не подходит.
+    network_mode: "host"
+
     depends_on:
       - postgres
   postgres:
     image: postgres:13.5
     restart: always
-    ports:
-      - "127.0.0.1:5432:5432"
+    network_mode: "host"
     volumes:
       - postgre_data:/var/lib/postgresql/data
     environment:
