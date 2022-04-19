@@ -3,8 +3,8 @@
 Позволяет apache редактировать/добавлять/удалять файлы внутри volume с приложением.  
 
 ## Требования
-1) Linux, т.к. внутри docker-compose используется network_mode: "host" - с ней Docker-host и контейнеры из docker-compose.yml начинают работать без сетевой изоляции. Именно эта настройка позволяет пользоваться удалённой отладкой.
-2) Свобоные порты 80, 9003, 5432. Опять же из-за network_mode: "host" :)
+1) Linux, т.к. внутри docker-compose используется network_mode: "host" - с ней Docker-host и контейнеры из docker-compose.yaml начинают работать без сетевой изоляции. Именно эта настройка позволяет пользоваться удалённой отладкой.
+2) Свободные порты 80, 9003, 5432. Опять же из-за network_mode: "host" :)
 
 ## Установка и использование
 
@@ -20,8 +20,8 @@ $ docker-compose up -d
 ## Удаленная отладка рабочий компьютер <-> VPS
 
 #### Для пользователей windows
-1) Установить программу [putty](https://www.putty.org/) и 
-2) настроить [Remote Port Forwarding](https://phoenixnap.com/kb/ssh-port-forwarding#ftoc-heading-6) с 9003 порта(Source port) на localhost:9003 (Destination)
+1) Установить программу [putty](https://www.putty.org/)
+2) Подключиться по ssh к vps, перед этим настроив [Remote Port Forwarding](https://phoenixnap.com/kb/ssh-port-forwarding#ftoc-heading-6) с 9003 порта(Source port) на localhost:9003 (Destination)
 
 #### Для пользователей linux
 ssh –R 9003:localhost:9003 user@vsp.server.com

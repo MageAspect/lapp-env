@@ -22,9 +22,6 @@ RUN chmod a+x /usr/local/bin/composer
 # Enable apache rewrite module
 RUN set -ex && a2enmod rewrite
 
-# Apache should listen post 8080
-RUN set -ex && sed -i 's/Listen 80/Listen 8080/gI' /etc/apache2/ports.conf
-
 RUN set -ex && apt update && apt install mc -y
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
